@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Interactive features are left as `<FillSlot slot="...">` placeholders and typed stubs in `src/lib/isidion/engine.ts`; the owner implements them — don't fill them in unless asked.
+- Site/body research data lives only in `src/lib/isidion/data.ts`; pages read from it rather than hardcoding values.
