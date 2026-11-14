@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as MethodologyRouteImport } from './routes/methodology'
+import { Route as MissionRouteImport } from './routes/mission'
 import { Route as RankRouteImport } from './routes/rank'
 import { Route as SitesSiteIdRouteImport } from './routes/sites.$siteId'
 
@@ -30,6 +31,11 @@ const MethodologyRoute = MethodologyRouteImport.update({
   path: '/methodology',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MissionRoute = MissionRouteImport.update({
+  id: '/mission',
+  path: '/mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RankRoute = RankRouteImport.update({
   id: '/rank',
   path: '/rank',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/compare': typeof CompareRoute
   '/methodology': typeof MethodologyRoute
+  '/mission': typeof MissionRoute
   '/rank': typeof RankRoute
   '/sites/$siteId': typeof SitesSiteIdRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/compare': typeof CompareRoute
   '/methodology': typeof MethodologyRoute
+  '/mission': typeof MissionRoute
   '/rank': typeof RankRoute
   '/sites/$siteId': typeof SitesSiteIdRoute
 }
@@ -60,22 +68,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/compare': typeof CompareRoute
   '/methodology': typeof MethodologyRoute
+  '/mission': typeof MissionRoute
   '/rank': typeof RankRoute
   '/sites/$siteId': typeof SitesSiteIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/compare' | '/methodology' | '/rank' | '/sites/$siteId'
+  fullPaths:
+    '/' | '/compare' | '/methodology' | '/mission' | '/rank' | '/sites/$siteId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/compare' | '/methodology' | '/rank' | '/sites/$siteId'
+  to:
+    '/' | '/compare' | '/methodology' | '/mission' | '/rank' | '/sites/$siteId'
   id:
-    '__root__' | '/' | '/compare' | '/methodology' | '/rank' | '/sites/$siteId'
+    | '__root__'
+    | '/'
+    | '/compare'
+    | '/methodology'
+    | '/mission'
+    | '/rank'
+    | '/sites/$siteId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CompareRoute: typeof CompareRoute
   MethodologyRoute: typeof MethodologyRoute
+  MissionRoute: typeof MissionRoute
   RankRoute: typeof RankRoute
   SitesSiteIdRoute: typeof SitesSiteIdRoute
 }
@@ -103,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mission': {
+      id: '/mission'
+      path: '/mission'
+      fullPath: '/mission'
+      preLoaderRoute: typeof MissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rank': {
       id: '/rank'
       path: '/rank'
@@ -124,6 +149,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CompareRoute: CompareRoute,
   MethodologyRoute: MethodologyRoute,
+  MissionRoute: MissionRoute,
   RankRoute: RankRoute,
   SitesSiteIdRoute: SitesSiteIdRoute,
 }
