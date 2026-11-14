@@ -29,8 +29,8 @@ function Rank() {
           <div>
             <p className="label-mono mb-2">Mission profiles</p>
             <div className="space-y-2">
-              {MISSIONS.map((m) => (
-                <div key={m.id} className="panel p-3">
+              {MISSIONS.map((m, i) => (
+                <div key={m.id} style={{ animationDelay: `${i * 80}ms` }} className="panel animate-in fade-in slide-in-from-left-6 fill-mode-both p-3 transition-all duration-300 hover:translate-x-1 hover:border-primary/60">
                   <p className="text-sm font-medium">{m.name}</p>
                   <p className="text-xs text-muted-foreground">{m.tagline}</p>
                 </div>

@@ -49,7 +49,7 @@ function SiteReport() {
   return (
     <article>
       <div className="relative h-64 overflow-hidden border-b border-border md:h-96">
-        <img src={SITE_IMAGES[site.id]} alt={site.name} width={1536} height={864} className="size-full object-cover" />
+        <img src={SITE_IMAGES[site.id]} alt={site.name} width={1536} height={864} className="size-full object-cover animate-in zoom-in-125 fade-in duration-[2500ms] ease-out" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-7xl px-4 pb-6 md:px-6">
           <Link to="/" className="no-print mb-3 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
@@ -77,7 +77,7 @@ function SiteReport() {
               {DIMENSIONS.map((d) => {
                 const v = site.dims[d.key];
                 return (
-                  <div key={d.key} className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 px-4 py-3 sm:grid-cols-[160px_1fr_auto]">
+                  <div key={d.key} className="transition-colors hover:bg-secondary/60 grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 px-4 py-3 sm:grid-cols-[160px_1fr_auto]">
                     <div className="text-sm font-medium">{d.label}</div>
                     <div className="order-3 col-span-2 text-xs text-muted-foreground sm:order-none sm:col-span-1">{v.note}</div>
                     <div className="flex items-center gap-2">
@@ -123,7 +123,7 @@ function SiteReport() {
             <p className="label-mono mb-3">Mission recommendations</p>
             <div className="grid gap-3 sm:grid-cols-2">
               {MISSIONS.filter((m) => m.id !== "balanced").map((m) => (
-                <div key={m.id} className="panel p-4">
+                <div key={m.id} className="panel p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary/60">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium">{m.name}</p>
                     <span className="font-mono text-xs text-muted-foreground">fit —</span>
@@ -139,7 +139,7 @@ function SiteReport() {
             <ol className="space-y-3 border-l border-border pl-5">
               {site.history.map((h) => (
                 <li key={h.year + h.event} className="relative">
-                  <span className="absolute -left-[25px] top-1.5 size-2 rounded-full bg-primary" />
+                  <span className="absolute -left-[25px] top-1.5 size-2 rounded-full bg-primary"><span className="absolute inset-0 animate-ping rounded-full bg-primary" /></span>
                   <p className="font-mono text-xs text-primary">{h.year}</p>
                   <p className="text-sm">{h.event}</p>
                 </li>
