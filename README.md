@@ -1,14 +1,38 @@
-# Welcome to your Lovable project
+# Planetary Analog Explorer
+
+1. Main Product - ISIDION Application
+
+- [ ] Fully functional ISIDION application
+
+- [ ] Interactive global Earth map
+
+- [ ] Five researched planetary analog locations
+
+- [ ] Moon and Mars comparison tools
+
+- [ ] AI-powered similarity-ranking algorithm
+
+- [ ] Analog Fingerprints for each location
+
+- [ ] Planetary comparison visualizations
+
+- [ ] Mission-specific recommendations
+
+- [ ] Scientific location reports
+
+- [ ] Data confidence and limitations indicators
+
+- [ ] Desktop and mobile compatibility
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a403b1dd-2c71-5b7a-b6e9-a86f5f9e7aa6).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +44,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
