@@ -223,7 +223,7 @@ export function Marquee({ items, className }: { items: string[]; className?: str
 /** Earth with orbiting Moon and Mars, rings and pulses. Purely decorative. */
 export function OrbitSystem({ className }: { className?: string }) {
   return (
-    <div aria-hidden className={cn("relative aspect-square w-full max-w-[460px]", className)}>
+    <div aria-hidden className={cn("relative aspect-square w-[85%] max-w-[460px] sm:w-full", className)}>
       <div className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-moon/20" />
       <div className="absolute inset-[14%] rounded-full border border-border" />
       <div className="absolute inset-[30%] rounded-full border border-earth/20" />
