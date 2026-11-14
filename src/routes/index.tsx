@@ -176,7 +176,7 @@ function Explorer() {
           <h2 className="mt-2 text-3xl font-semibold md:text-4xl">What ISIDION does</h2>
         </Reveal>
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {CHECKLIST[0].items.slice(1).map((f, i) => (
+          {(CHECKLIST[0]?.items ?? []).slice(1).map((f, i) => (
             <Reveal key={f.id} delay={(i % 4) * 80}>
               <TiltCard className="panel h-full rounded-lg p-5">
                 <div className="flex items-center justify-between">

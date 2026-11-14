@@ -14,6 +14,7 @@ export function Starfield() {
     if (!ctx) return;
     const css = getComputedStyle(document.documentElement);
     const palette = [css.getPropertyValue("--foreground"), css.getPropertyValue("--moon"), css.getPropertyValue("--mars"), css.getPropertyValue("--earth")].map((c) => c.trim());
+    const col = (i: number) => palette[i] ?? palette[0] ?? "";
     let w = 0, h = 0, raf = 0;
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
     type Star = { x: number; y: number; z: number; r: number; p: number; c: string };
@@ -28,7 +29,7 @@ export function Starfield() {
       stars = Array.from({ length: n }, () => ({
         x: Math.random() * w, y: Math.random() * h, z: Math.random() * 0.9 + 0.1,
         r: Math.random() * 1.3 + 0.2, p: Math.random() * Math.PI * 2,
-        c: palette[Math.random() < 0.82 ? 0 : 1 + Math.floor(Math.random() * 3)],
+        c: col(Math.random() < 0.82 ? 0 : 1 + Math.floor(Math.random() * 3)),
       }));
     };
     const onMove = (e: PointerEvent) => { mouse.tx = e.clientX / w - 0.5; mouse.ty = e.clientY / h - 0.5; };
@@ -55,7 +56,7 @@ export function Starfield() {
       shooters = shooters.filter((s) => s.life > 0);
       for (const s of shooters) {
         const g = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * 10, s.y - s.vy * 10);
-        g.addColorStop(0, palette[1]); g.addColorStop(1, "transparent");
+        g.addColorStop(0, col(1)); g.addColorStop(1, "transparent");
         ctx.globalAlpha = s.life; ctx.strokeStyle = g; ctx.lineWidth = 1.6;
         ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 10, s.y - s.vy * 10); ctx.stroke();
         s.x += s.vx; s.y += s.vy; s.life -= 0.018;
@@ -122,7 +123,7 @@ export function Reveal({ children, delay = 0, className, as: Tag = "div" }: { ch
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { el.classList.add("is-visible"); io.disconnect(); } },
+      (entries) => { if (entries[0]?.isIntersecting) { el.classList.add("is-visible"); io.disconnect(); } },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
     );
     io.observe(el);
@@ -164,8 +165,8 @@ export function CountUp({ value, decimals = 0, suffix = "", className }: { value
     if (!el || reduced()) return;
     setN(0);
     let raf = 0;
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0]?.isIntersecting) return;
       io.disconnect();
       const start = performance.now();
       const tick = (now: number) => {

@@ -37,6 +37,7 @@ function Architecture() {
       <svg viewBox="0 0 900 240" className="min-w-[720px]">
         {EDGES.map(([a, b]) => {
           const A = pos[a], B = pos[b];
+          if (!A || !B) return null;
           const x1 = A.x + W, y1 = A.y + H / 2, x2 = B.x, y2 = B.y + H / 2;
           const mx = (x1 + x2) / 2;
           return (

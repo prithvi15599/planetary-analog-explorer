@@ -7,12 +7,12 @@ describe("submission checklist", () => {
   });
 
   it("lists 11 main-product items", () => {
-    expect(CHECKLIST[0].items).toHaveLength(11);
+    expect(CHECKLIST[0]!.items).toHaveLength(11);
   });
 
   it("computes section progress from checked items", () => {
-    const s = CHECKLIST[3]; // video, 6 items
-    expect(sectionProgress(s, { [s.items[0].id]: true, [s.items[1].id]: true, [s.items[2].id]: true })).toBe(0.5);
+    const s = CHECKLIST.find((x) => x.id === "video")!; // 6 items
+    expect(sectionProgress(s, Object.fromEntries(s.items.slice(0, 3).map((i) => [i.id, true])))).toBe(0.5);
   });
 
   it("overall progress is 1 when everything is checked", () => {
