@@ -32,3 +32,4 @@ use the editor.
 ## Project rules
 - Interactive features are left as `<FillSlot slot="...">` placeholders and typed stubs in `src/lib/isidion/engine.ts`; the owner implements them — don't fill them in unless asked.
 - Site/body research data lives only in `src/lib/isidion/data.ts`; pages read from it rather than hardcoding values.
+- Decorative motion (starfield, cursor glow, reveal, tilt, scramble, orbit) lives in `src/components/isidion/motion.tsx` with keyframes in `src/styles.css`; all motion is disabled under prefers-reduced-motion.
