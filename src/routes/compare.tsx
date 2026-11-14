@@ -84,7 +84,7 @@ function Compare() {
               </thead>
               <tbody className="font-mono text-[13px]">
                 {rows.map((r) => (
-                  <tr key={r.name} className="border-b border-border/60 last:border-0">
+                  <tr key={r.name} className="border-b border-border/60 transition-colors last:border-0 hover:bg-secondary/60">
                     <td className={`px-5 py-2.5 font-sans ${r.tone}`}>{r.name}</td>
                     <td className="px-3 py-2.5">{fmt(r.p.pressureHPa)}</td>
                     <td className="px-3 py-2.5">{r.p.meanTempC}</td>

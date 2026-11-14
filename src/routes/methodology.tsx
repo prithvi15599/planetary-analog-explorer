@@ -3,6 +3,7 @@ import { DIMENSIONS, DIM_GROUP_LABEL } from "@/lib/isidion/data";
 import { ConfidenceBadge } from "@/components/isidion/Badges";
 import { FillSlot } from "@/components/isidion/FillSlot";
 import { PageHeader } from "@/components/isidion/AppShell";
+import { Reveal, TiltCard } from "@/components/isidion/motion";
 
 export const Route = createFileRoute("/methodology")({
   head: () => ({
@@ -37,8 +38,9 @@ function Methodology() {
         <section>
           <p className="label-mono mb-3">Analog dimensions</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {DIMENSIONS.map((d) => (
-              <div key={d.key} className="panel p-4">
+            {DIMENSIONS.map((d, i) => (
+              <Reveal key={d.key} delay={(i % 3) * 80}>
+              <TiltCard className="panel h-full rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs text-primary">{d.short}</span>
                   <span className="label-mono">{DIM_GROUP_LABEL[d.group]}</span>
@@ -46,7 +48,8 @@ function Methodology() {
                 <h3 className="mt-2 font-medium">{d.label}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{d.description}</p>
                 <p className="mt-2 font-mono text-[11px] text-muted-foreground">{d.scale}</p>
-              </div>
+              </TiltCard>
+              </Reveal>
             ))}
           </div>
         </section>

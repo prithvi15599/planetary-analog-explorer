@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as RankRouteImport } from './routes/rank'
@@ -30,6 +31,11 @@ const AboutRoute = AboutRouteImport.update({
 const CompareRoute = CompareRouteImport.update({
   id: '/compare',
   path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MethodologyRoute = MethodologyRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/docs': typeof DocsRoute
   '/methodology': typeof MethodologyRoute
   '/mission': typeof MissionRoute
   '/rank': typeof RankRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/docs': typeof DocsRoute
   '/methodology': typeof MethodologyRoute
   '/mission': typeof MissionRoute
   '/rank': typeof RankRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/docs': typeof DocsRoute
   '/methodology': typeof MethodologyRoute
   '/mission': typeof MissionRoute
   '/rank': typeof RankRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/compare'
+    | '/docs'
     | '/methodology'
     | '/mission'
     | '/rank'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/compare'
+    | '/docs'
     | '/methodology'
     | '/mission'
     | '/rank'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/compare'
+    | '/docs'
     | '/methodology'
     | '/mission'
     | '/rank'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CompareRoute: typeof CompareRoute
+  DocsRoute: typeof DocsRoute
   MethodologyRoute: typeof MethodologyRoute
   MissionRoute: typeof MissionRoute
   RankRoute: typeof RankRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/methodology': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CompareRoute: CompareRoute,
+  DocsRoute: DocsRoute,
   MethodologyRoute: MethodologyRoute,
   MissionRoute: MissionRoute,
   RankRoute: RankRoute,
