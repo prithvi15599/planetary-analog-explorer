@@ -10,9 +10,13 @@ describe("submission checklist", () => {
     expect(CHECKLIST[0]!.items).toHaveLength(11);
   });
 
+  it("official demo section has the report's 8 items", () => {
+    expect(CHECKLIST.find((x) => x.id === "demo")!.items).toHaveLength(8);
+  });
+
   it("computes section progress from checked items", () => {
-    const s = CHECKLIST.find((x) => x.id === "video")!; // 6 items
-    expect(sectionProgress(s, Object.fromEntries(s.items.slice(0, 3).map((i) => [i.id, true])))).toBe(0.5);
+    const s = CHECKLIST.find((x) => x.id === "demo")!;
+    expect(sectionProgress(s, Object.fromEntries(s.items.slice(0, 4).map((i) => [i.id, true])))).toBe(0.5);
   });
 
   it("overall progress is 1 when everything is checked", () => {

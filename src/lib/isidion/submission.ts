@@ -1,11 +1,11 @@
-/** NASA Space Apps Challenge 2026 — ISIDION final submission checklist. */
+/** NASA Space Apps Challenge 2026 — ISIDION final submission checklist (from the team report). */
 
-export type ItemStatus = "live" | "slot" | "external";
+export type ItemStatus = "live" | "repo" | "external";
 
 export interface ChecklistItem {
   id: string;
   label: string;
-  /** live = already in this app, slot = fill-in placeholder here, external = delivered outside the app */
+  /** live = shown on this site, repo = in the GitHub application, external = delivered separately */
   status: ItemStatus;
 }
 
@@ -23,21 +23,29 @@ const mk = (sec: string, rows: [string, ItemStatus][]): ChecklistItem[] =>
 export const CHALLENGE = {
   event: "NASA Space Apps Challenge 2026",
   title: "ISIDION — Final Project Submission",
+  name: "Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars",
+  brief:
+    "Places on Earth that have analogous characteristics to the Moon or Mars allow mission teams to test equipment and methods before they fly; however, such terrestrial analog sites are not entirely well characterized. The challenge: use open Earth, Moon, and Mars data from NASA and other space agencies to identify and characterize new terrestrial analogs for future bases or landing sites, then present the findings as a map, visualization, or other tool.",
+  differentiator:
+    "Moving beyond superficial visual comparisons to a multi-factor, physics-driven geospatial matching engine using official NASA/USGS elevation and illumination datasets, surfaced via an interactive mission-planning dashboard.",
   objective:
     "ISIDION should be a complete, working planetary analog discovery application that combines original scientific research, real NASA datasets, intelligent location ranking, and practical recommendations for future Moon and Mars exploration.",
+  date: "November 14, 2026",
 };
+
+export const TEAM = ["Prady", "Henry", "Shreyas", "Prithvi"];
 
 export const CHECKLIST: ChecklistSection[] = [
   {
-    id: "product", n: 1, title: "Main Product — ISIDION Application", blurb: "The working app you're looking at.",
+    id: "product", n: 1, title: "Main Product — ISIDION Application", blurb: "This site plus the terrain-matching engine.",
     items: mk("product", [
-      ["Fully functional ISIDION application", "slot"],
-      ["Interactive global Earth map", "slot"],
+      ["Fully functional ISIDION application", "repo"],
+      ["Interactive global Earth map", "live"],
       ["Five researched planetary analog locations", "live"],
-      ["Moon and Mars comparison tools", "slot"],
-      ["AI-powered similarity-ranking algorithm", "slot"],
-      ["Analog Fingerprints for each location", "slot"],
-      ["Planetary comparison visualizations", "slot"],
+      ["Moon and Mars comparison tools", "live"],
+      ["AI-powered similarity-ranking algorithm", "repo"],
+      ["Analog Fingerprints for each location", "live"],
+      ["Planetary comparison visualizations", "live"],
       ["Mission-specific recommendations", "live"],
       ["Scientific location reports", "live"],
       ["Data confidence and limitations indicators", "live"],
@@ -49,8 +57,8 @@ export const CHECKLIST: ChecklistSection[] = [
     items: mk("research", [
       ["Scientific research report (PDF)", "external"],
       ["Five candidate locations thoroughly researched", "live"],
-      ["Earth satellite and geological datasets", "external"],
-      ["Moon and Mars datasets", "external"],
+      ["Earth satellite and geological datasets", "live"],
+      ["Moon and Mars datasets", "live"],
       ["Verified coordinates and measurements", "live"],
       ["NASA, ESA and USGS sources documented", "live"],
       ["Scientific comparisons and findings", "live"],
@@ -64,29 +72,31 @@ export const CHECKLIST: ChecklistSection[] = [
       ["Problem statement and proposed solution", "live"],
       ["ISIDION overview and features", "live"],
       ["Scientific methodology", "live"],
-      ["Similarity algorithm explanation", "slot"],
+      ["Similarity algorithm explanation", "live"],
       ["Five location discoveries", "live"],
       ["Scientific impact and future applications", "live"],
     ]),
   },
   {
-    id: "video", n: 4, title: "Demonstration Video", blurb: "A 2–3 minute walkthrough.",
-    items: mk("video", [
-      ["2–3 minute demonstration video", "external"],
+    id: "demo", n: 4, title: "Official NASA Project Demo", blurb: "30-second video or a 7-slide deck.",
+    items: mk("demo", [
+      ["Project demo video (30 s max) OR slide deck (7 slides max)", "external"],
       ["Application walkthrough", "external"],
       ["Interactive map demonstration", "external"],
       ["Similarity-ranking demonstration", "external"],
       ["Analog Fingerprint demonstration", "external"],
       ["Showcase of the strongest scientific discovery", "external"],
+      ["Publicly accessible external hosting link", "external"],
+      ["English subtitles if the video uses another spoken language", "external"],
     ]),
   },
   {
     id: "docs", n: 5, title: "Technical Documentation", blurb: "How it's built and how to run it.",
     items: mk("docs", [
-      ["Technical documentation (PDF or README)", "live"],
+      ["Technical documentation (PDF or README)", "repo"],
       ["React frontend documentation", "live"],
-      ["Python backend documentation", "slot"],
-      ["Algorithm and scoring methodology", "slot"],
+      ["Python backend documentation", "live"],
+      ["Algorithm and scoring methodology", "live"],
       ["Database structure", "live"],
       ["APIs and data sources", "live"],
       ["Installation and setup instructions", "live"],
@@ -96,34 +106,37 @@ export const CHECKLIST: ChecklistSection[] = [
   {
     id: "github", n: 6, title: "GitHub Repository", blurb: "Everything, open and reproducible.",
     items: mk("github", [
-      ["Complete source code", "external"],
-      ["Frontend and backend files", "external"],
-      ["Database structure", "external"],
-      ["Dataset references", "external"],
-      ["README and project overview", "external"],
-      ["Installation instructions", "external"],
-      ["Screenshots and application preview", "external"],
+      ["Complete source code", "repo"],
+      ["Frontend and backend files", "repo"],
+      ["Database structure", "repo"],
+      ["Dataset references", "repo"],
+      ["README and project overview", "repo"],
+      ["Installation instructions", "repo"],
+      ["Screenshots and application preview", "repo"],
     ]),
   },
   {
     id: "final", n: 7, title: "Final NASA Submission", blurb: "The last mile.",
     items: mk("final", [
       ["Project title and description", "live"],
-      ["Team member names and contributions", "slot"],
-      ["Application link", "external"],
+      ["Team member names and contributions", "live"],
+      ["Application link", "repo"],
       ["Demonstration video link", "external"],
       ["Presentation file", "external"],
       ["Scientific research report", "external"],
-      ["GitHub repository link", "external"],
+      ["GitHub repository link", "repo"],
       ["Project screenshots", "external"],
       ["Final submission reviewed and completed", "external"],
     ]),
   },
 ];
 
+/** Items already marked complete in the team's checklist. */
+export const PRECHECKED: Record<string, boolean> = { "presentation-2": true, "presentation-6": true };
+
 export const STATUS_LABEL: Record<ItemStatus, string> = {
-  live: "In app",
-  slot: "Fill-in",
+  live: "On site",
+  repo: "GitHub",
   external: "Off-site",
 };
 
