@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Crosshair, Database, Lightbulb, Rocket, Target, Users } from "lucide-react";
-import { CHALLENGE } from "@/lib/isidion/submission";
+import { CHALLENGE, TEAM } from "@/lib/isidion/submission";
 import { DATA_SOURCES } from "@/lib/isidion/sources";
 import { PageHeader } from "@/components/isidion/AppShell";
 import { Reveal, TiltCard } from "@/components/isidion/motion";
@@ -27,6 +27,15 @@ const STEPS = [
   { icon: Rocket, t: "Recommend", d: "Reports pair each score with mission advice, data confidence and known limitations." },
 ];
 
+const CANDIDATE_LOCATIONS = [
+  "Canadian Arctic",
+  "Danakil Depression",
+  "Svalbard",
+  "Afar volcanic region",
+  "Salar de Uyuni",
+  "Qaidam Basin, China & Tibetan Plateau",
+];
+
 const agencyTone = { NASA: "text-mars border-mars/40", ESA: "text-moon border-moon/40", USGS: "text-earth border-earth/40" } as const;
 
 function About() {
@@ -44,9 +53,10 @@ function About() {
               <p className="label-mono mt-5">Problem</p>
               <h2 className="mt-2 text-2xl font-semibold">Picking a field site is guesswork</h2>
               <p className="mt-3 text-muted-foreground">
-                Rovers, drills and crews are rehearsed at analog sites on Earth before going to the Moon or Mars. But
-                deciding which site best matches a mission's needs means digging through scattered papers, and the
-                choice is rarely compared side by side.
+                Selecting future landing sites and lunar base locations depends on many factors, including topography,
+                geology, environment and available resources. Candidate analogs help mission teams rehearse equipment,
+                workflow and operations before launch, but without a structured comparison the best site is difficult to
+                identify and defend.
               </p>
             </TiltCard>
           </Reveal>
@@ -56,8 +66,9 @@ function About() {
               <p className="label-mono mt-5">Solution</p>
               <h2 className="mt-2 text-2xl font-semibold">A ranked, explainable analog finder</h2>
               <p className="mt-3 text-muted-foreground">
-                ISIDION puts researched analog sites on one map, scores each against lunar and martian conditions,
-                and explains every score — including how confident the data is and where the analog falls short.
+                ISIDION compares Earth environments against lunar and martian conditions using a multi-factor analog
+                framework. It ranks physically and operationally relevant sites, highlights where the analog fits well,
+                and explains the scientific limits of each comparison.
               </p>
             </TiltCard>
           </Reveal>
@@ -76,8 +87,8 @@ function About() {
             </div>
             {STEPS.map((s, i) => (
               <Reveal key={s.t} delay={i * 150} className="relative">
-                <div className="grid size-14 place-items-center rounded-full border border-mars/50 bg-background shadow-[0_0_30px_-5px_var(--mars)] transition-transform duration-500 hover:rotate-[360deg] hover:scale-110">
-                  <s.icon className="size-6 text-mars" />
+                <div className="grid size-14 place-items-center rounded-full border border-mars/50 bg-background shadow-[0_0_30px_-5px_var(--mars)] transition-transform duration-500 hover:rotate-[[...]]"></div>
+                <s.icon className="size-6 text-mars" />
                 </div>
                 <p className="mt-4 font-mono text-xs text-muted-foreground">0{i + 1}</p>
                 <h3 className="text-xl font-semibold">{s.t}</h3>
@@ -96,7 +107,7 @@ function About() {
                 "Cheaper, faster rehearsal of Artemis-era lunar and future Mars surface operations.",
                 "A common, transparent scale for comparing analog sites across disciplines.",
                 "Honest limitations that stop teams over-trusting any single analog.",
-                "Extensible to new sites, new worlds (Europa, Titan) and new mission profiles.",
+                "A process-based method for ranking cold deserts, volcanic fields, evaporite basins and aeolian terrains.",
               ].map((t, i) => (
                 <li key={t} className="flex gap-3">
                   <span className="mt-2 size-1.5 shrink-0 animate-twinkle rounded-full bg-mars" style={{ animationDelay: `${i * 0.4}s` }} />
@@ -117,14 +128,31 @@ function About() {
                     <span className={cn("w-14 shrink-0 rounded border px-1.5 py-0.5 text-center font-mono text-[10px]", agencyTone[d.agency])}>{d.agency}</span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{d.name}</p>
-                      <p className="truncate text-xs text-muted-foreground">{d.use}</p>
+                      <p className="truncate text-xs text-muted-foreground">{d.role}</p>
                     </div>
-                    <span className="font-mono text-[10px] uppercase text-muted-foreground">{d.body}</span>
+                    <span className="font-mono text-[10px] uppercase text-muted-foreground">{d.agency}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </Reveal>
+        </section>
+
+        <section className="panel rounded-xl p-6">
+          <Reveal>
+            <p className="label-mono">Candidate locations</p>
+            <h2 className="mt-2 text-3xl font-semibold">Research anchors from the challenge brief</h2>
+          </Reveal>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {CANDIDATE_LOCATIONS.map((location, i) => (
+              <Reveal key={location} delay={i * 70}>
+                <div className="rounded-lg border border-border bg-background/40 p-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Candidate</p>
+                  <p className="mt-2 font-medium">{location}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         <section>
@@ -133,14 +161,14 @@ function About() {
             <h2 className="mt-2 text-3xl font-semibold md:text-4xl">The crew</h2>
           </Reveal>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map((n, i) => (
-              <Reveal key={n} delay={i * 90}>
+            {TEAM.map((member, i) => (
+              <Reveal key={member} delay={i * 90}>
                 <div className="fill-slot flex flex-col items-center gap-3 p-6 text-center">
                   <span className="grid size-16 place-items-center rounded-full border border-dashed border-slot/60 text-slot">
                     <Users className="size-6" />
                   </span>
-                  <p className="font-medium">[ Team member {n} ]</p>
-                  <p className="font-mono text-[11px] text-slot">name · role · contribution</p>
+                  <p className="font-medium">{member}</p>
+                  <p className="font-mono text-[11px] text-slot">ISIDION team member</p>
                 </div>
               </Reveal>
             ))}
@@ -157,3 +185,4 @@ function About() {
     </>
   );
 }
+

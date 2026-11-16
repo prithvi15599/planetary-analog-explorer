@@ -22,10 +22,10 @@ export const Route = createFileRoute("/docs")({
 
 const NODES = [
   { id: "ui", x: 60, y: 90, t: "React frontend", s: "TanStack Start · Tailwind", tone: "border-moon/60 text-moon" },
-  { id: "engine", x: 360, y: 30, t: "Similarity engine", s: "engine.ts · fill-in", tone: "border-slot/60 text-slot" },
-  { id: "api", x: 360, y: 150, t: "Python backend", s: "API · fill-in", tone: "border-slot/60 text-slot" },
-  { id: "db", x: 660, y: 150, t: "Database", s: "sites · bodies · scores", tone: "border-earth/60 text-earth" },
-  { id: "data", x: 660, y: 30, t: "NASA / ESA / USGS", s: "datasets", tone: "border-mars/60 text-mars" },
+  { id: "engine", x: 360, y: 30, t: "Similarity engine", s: "site scoring + weights", tone: "border-slot/60 text-slot" },
+  { id: "api", x: 360, y: 150, t: "Scientific backend", s: "Earth / Moon / Mars data", tone: "border-slot/60 text-slot" },
+  { id: "db", x: 660, y: 150, t: "Analog database", s: "sites · bodies · scores", tone: "border-earth/60 text-earth" },
+  { id: "data", x: 660, y: 30, t: "NASA / ESA / USGS", s: "datasets and references", tone: "border-mars/60 text-mars" },
 ];
 const EDGES: [string, string][] = [["ui", "engine"], ["ui", "api"], ["api", "db"], ["api", "data"], ["engine", "data"]];
 
@@ -61,20 +61,19 @@ function Architecture() {
 }
 
 const MODEL = [
-  { name: "Site", fields: ["id · code · name", "region · country", "lat · lon · elevationM", "primaryAnalog: mars | moon | both", "physical: PhysicalParams", "dims: Record<DimKey, DimValue>", "history[] · missions · limitations[] · references[]"] },
-  { name: "Body", fields: ["id: mars | moon", "profile: Record<DimKey, number>", "physical: PhysicalParams", "notes"] },
-  { name: "Dimension", fields: ["key · label · short", "group: climate | chemistry | geology | operations", "description · scale"] },
+  { name: "Site", fields: ["id · code · name", "region · country", "lat · lon · elevation", "primaryAnalog", "scores: Record<DimKey, number>"] },
+  { name: "Body", fields: ["id: mars | moon", "profile: dimension scores", "physical parameters", "scientific notes"] },
+  { name: "Dimension", fields: ["key · label · short", "group: thermal | geology | dust | terrain | water | operations", "scale and interpretation"] },
   { name: "MissionProfile", fields: ["id · name · tagline", "weights: Record<DimKey, number>"] },
-  { name: "DimValue", fields: ["v: 0–1 normalised value", "c: high | medium | low", "note: source summary"] },
   { name: "PhysicalParams", fields: ["pressureHPa · meanTempC", "diurnalRangeC · precipMm", "gravityG · radiationMSvDay"] },
 ];
 
 const FILES = [
-  ["src/lib/isidion/data.ts", "Research dataset: sites, bodies, dimensions, missions"],
-  ["src/lib/isidion/engine.ts", "Similarity & ranking stubs (fill-in)"],
-  ["src/lib/isidion/submission.ts", "Space Apps submission checklist"],
-  ["src/components/isidion/", "Shell, motion effects, badges, fill-in slots"],
-  ["src/routes/", "One file per page (explorer, compare, rank, reports…)"],
+  ["src/lib/isidion/data.ts", "Research dataset: sites, bodies, dimensions and scores"],
+  ["src/lib/isidion/engine.ts", "Similarity and ranking equations"],
+  ["src/lib/isidion/submission.ts", "Challenge brief and final submission checklist"],
+  ["src/components/isidion/", "Shell, motion effects and data cards"],
+  ["src/routes/", "One file per route for explorer, compare, rank and mission pages"],
 ];
 
 function Docs() {
@@ -95,10 +94,10 @@ function Docs() {
             <TiltCard max={4} className="panel h-full rounded-xl p-6">
               <p className="label-mono">React frontend</p>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                <li><b className="text-foreground">Framework</b> — React 19 on TanStack Start with file-based routing</li>
-                <li><b className="text-foreground">Styling</b> — Tailwind CSS v4 with a token-based design system</li>
-                <li><b className="text-foreground">Charts</b> — Recharts available for comparison visualizations</li>
-                <li><b className="text-foreground">Maps</b> — d3-geo + world-atlas installed for the Earth map slot</li>
+                <li><b className="text-foreground">Framework</b> — React 19 using file-based routing and TanStack Start.</li>
+                <li><b className="text-foreground">Styling</b> — Tailwind CSS v4 with a Mars / Moon / Earth theme.</li>
+                <li><b className="text-foreground">Maps</b> — Earth map and site cards for the five research locations.</li>
+                <li><b className="text-foreground">Pages</b> — Explorer, Compare, Rank, Methodology, Docs, Mission and site reports.</li>
               </ul>
               <div className="mt-5 space-y-1.5">
                 {FILES.map(([f, d]) => (
@@ -111,13 +110,17 @@ function Docs() {
             </TiltCard>
           </Reveal>
           <Reveal delay={120}>
-            <FillSlot
-              slot="python-backend-docs"
-              title="Python backend documentation"
-              hint="Describe your backend endpoints, scoring service and how it connects to the frontend."
-              inputs={["endpoints", "scoring service", "deployment"]}
-              className="h-full min-h-72"
-            />
+            <FillSlot slot="python-backend-docs" title="Architecture summary" className="h-full min-h-72">
+              <div className="space-y-4 p-2 text-left">
+                <p className="label-mono text-earth">Project architecture</p>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><b className="text-foreground">Frontend</b> — React navigation for the homepage, maps, rankings and site reports.</li>
+                  <li><b className="text-foreground">Research engine</b> — science-backed site scoring across terrain, geology, thermal, dust and water metrics.</li>
+                  <li><b className="text-foreground">Database</b> — structured analog records for candidate Earth sites and planetary target conditions.</li>
+                  <li><b className="text-foreground">Data sources</b> — NASA Earthdata, Worldview, PDS, LRO Diviner, CSA RADARSAT, ESA Copernicus and peer-reviewed literature.</li>
+                </ul>
+              </div>
+            </FillSlot>
           </Reveal>
         </section>
 
@@ -183,10 +186,21 @@ function Docs() {
             </div>
           </Reveal>
           <Reveal delay={200}>
-            <FillSlot slot="python-setup" title="Python backend setup" hint="pip / venv steps, environment variables and how to start the API." className="mt-4 min-h-32" />
+            <FillSlot slot="python-setup" title="Research workflow" className="mt-4 min-h-32">
+              <div className="space-y-4 p-2 text-left">
+                <p className="label-mono text-earth">Research and validation workflow</p>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>Investigate five candidate analog locations: Canadian Arctic, Danakil Depression, Svalbard, Afar volcanic region and Salar de Uyuni.</li>
+                  <li>Collect Earth, Moon and Mars datasets from NASA Earthdata, Worldview, PDS, LRO Diviner, ESA Copernicus and CSA RADARSAT.</li>
+                  <li>Normalize comparable measurements and calculate weighted similarity scores for each analog site.</li>
+                  <li>Document scientific assumptions, uncertainty and mission-specific recommendations before final submission.</li>
+                </ul>
+              </div>
+            </FillSlot>
           </Reveal>
         </section>
       </div>
     </>
   );
 }
+

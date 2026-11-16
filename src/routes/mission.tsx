@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check, FileText, Github, Link2, Presentation, Users, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CHALLENGE, CHECKLIST, STATUS_LABEL, overallProgress, sectionProgress, type ChecklistSection } from "@/lib/isidion/submission";
+import { LINKS } from "@/lib/isidion/sources";
 import { PageHeader } from "@/components/isidion/AppShell";
 import { Reveal, TiltCard } from "@/components/isidion/motion";
 import { cn } from "@/lib/utils";
@@ -98,7 +99,7 @@ function SectionCard({ section, checked, toggle, popped }: { section: ChecklistS
                   onClick={() => toggle(it.id)}
                   className="group flex w-full items-center gap-3 rounded-md px-2 py-2 text-left transition-colors hover:bg-secondary"
                 >
-                  <span className={cn("relative grid size-5 shrink-0 place-items-center rounded border transition-all duration-300", on ? "scale-110 border-primary bg-primary text-primary-foreground" : "border-border group-hover:border-primary/60")}>
+                  <span className={cn("relative grid size-5 shrink-0 place-items-center rounded border transition-all duration-300", on ? "scale-110 border-primary bg-primary text-primary-foreground" : "border-border bg-transparent text-muted-foreground")}>
                     {on && <Check className="size-3.5 animate-in zoom-in-50 spin-in-90 duration-300" />}
                     {popped === it.id && on && <Burst />}
                   </span>
@@ -117,12 +118,12 @@ function SectionCard({ section, checked, toggle, popped }: { section: ChecklistS
 }
 
 const KIT = [
-  { icon: Link2, label: "Application link" },
-  { icon: Video, label: "Demonstration video" },
-  { icon: Presentation, label: "Presentation file" },
-  { icon: FileText, label: "Scientific research report" },
-  { icon: Github, label: "GitHub repository" },
-  { icon: Users, label: "Team members & contributions" },
+  { icon: Link2, label: "Application link", href: LINKS.app },
+  { icon: Presentation, label: "Challenge brief", href: LINKS.challenge },
+  { icon: Github, label: "GitHub repository", href: LINKS.prototype },
+  { icon: FileText, label: "Scientific research report", href: LINKS.prototype },
+  { icon: Video, label: "Demonstration / project overview", href: LINKS.challenge },
+  { icon: Users, label: "Team members & contributions", href: LINKS.prototype },
 ];
 
 function Mission() {
@@ -197,15 +198,15 @@ function Mission() {
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {KIT.map((k, i) => (
               <Reveal key={k.label} delay={i * 70}>
-                <div className="fill-slot group flex items-center gap-4 p-5 transition-transform hover:-translate-y-1">
+                <a href={k.href} target="_blank" rel="noreferrer" className="fill-slot group flex items-center gap-4 p-5 transition-transform hover:-translate-y-1">
                   <span className="grid size-11 place-items-center rounded-lg border border-slot/40 text-slot transition-transform duration-500 group-hover:rotate-[360deg]">
                     <k.icon className="size-5" />
                   </span>
                   <div>
                     <p className="font-medium">{k.label}</p>
-                    <p className="font-mono text-[11px] text-slot">[ add link — not provided yet ]</p>
+                    <p className="font-mono text-[11px] text-slot">{new URL(k.href).hostname.replace("www.", "")}</p>
                   </div>
-                </div>
+                </a>
               </Reveal>
             ))}
           </div>
@@ -214,3 +215,4 @@ function Mission() {
     </>
   );
 }
+

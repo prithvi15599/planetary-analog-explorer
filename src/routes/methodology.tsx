@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DIMENSIONS, DIM_GROUP_LABEL } from "@/lib/isidion/data";
+import { DIMENSIONS } from "@/lib/isidion/data";
 import { ConfidenceBadge } from "@/components/isidion/Badges";
 import { FillSlot } from "@/components/isidion/FillSlot";
 import { PageHeader } from "@/components/isidion/AppShell";
@@ -23,32 +23,40 @@ function Methodology() {
   return (
     <>
       <PageHeader eyebrow="Methodology" title="How ISIDION scores analogs">
-        Every site is placed on twelve normalised dimensions shared with Mars and the Moon.
+        Every site is placed on multiple normalised dimensions shared with Mars and the Moon.
       </PageHeader>
 
       <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 md:px-6">
-        <FillSlot
-          slot="algorithm-explainer"
-          title="Similarity algorithm"
-          hint="Describe or visualise your scoring formula here once computeSimilarity() is implemented."
-          inputs={["src/lib/isidion/engine.ts"]}
-          className="min-h-36"
-        />
+        <FillSlot slot="algorithm-explainer" title="Similarity algorithm" className="min-h-36">
+          <div className="space-y-4 p-3 text-left">
+            <p className="label-mono text-earth">Scoring workflow</p>
+            <p className="text-sm text-muted-foreground">
+              The project follows a process-based analog assessment rather than a purely visual comparison. Each site is scored
+              across the relevant dimensions for thermal stress, geology, dust, terrain mobility, water and operational feasibility.
+            </p>
+            <code className="block rounded-md border border-border bg-muted/60 p-3 font-mono text-xs text-foreground">
+              Score = Σ(weight × dimension_score)\nNormalized scores are compared against Mars and Moon target environments, with missing or weak data handled explicitly.
+            </code>
+            <p className="text-sm text-muted-foreground">
+              The result is a ranked comparison that supports mission-specific analog choices such as lunar rover testing,
+              Mars rover testing, landing-site research and ice-resource exploration.
+            </p>
+          </div>
+        </FillSlot>
 
         <section>
           <p className="label-mono mb-3">Analog dimensions</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {DIMENSIONS.map((d, i) => (
               <Reveal key={d.key} delay={(i % 3) * 80}>
-              <TiltCard className="panel h-full rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-primary">{d.short}</span>
-                  <span className="label-mono">{DIM_GROUP_LABEL[d.group]}</span>
-                </div>
-                <h3 className="mt-2 font-medium">{d.label}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{d.description}</p>
-                <p className="mt-2 font-mono text-[11px] text-muted-foreground">{d.scale}</p>
-              </TiltCard>
+                <TiltCard className="panel h-full rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-primary">{d.short}</span>
+                  </div>
+                  <h3 className="mt-2 font-medium">{d.label}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{d.interpretation}</p>
+                  <p className="mt-2 font-mono text-[11px] text-muted-foreground">{d.variables}</p>
+                </TiltCard>
               </Reveal>
             ))}
           </div>
@@ -76,3 +84,4 @@ function Methodology() {
     </>
   );
 }
+
