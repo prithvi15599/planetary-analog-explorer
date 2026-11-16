@@ -70,18 +70,19 @@ export function Starfield() {
   return <canvas ref={ref} aria-hidden className="pointer-events-none fixed inset-0 -z-10 opacity-80" />;
 }
 
-/** Soft glowing aura that trails the cursor. */
+/** Restrained background aura with a soft, eased cursor-follow effect. */
 export function CursorGlow() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (reduced() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     let x = -500, y = -500, cx = x, cy = y, raf = 0;
     const move = (e: PointerEvent) => { x = e.clientX; y = e.clientY; };
     const loop = () => {
-      cx += (x - cx) * 0.12; cy += (y - cy) * 0.12;
-      if (ref.current) ref.current.style.transform = `translate(${cx - 250}px, ${cy - 250}px)`;
+      cx += (x - cx) * 0.08; cy += (y - cy) * 0.08;
+      if (ref.current) ref.current.style.transform = `translate(${cx - 190}px, ${cy - 190}px)`;
       raf = requestAnimationFrame(loop);
     };
-    window.addEventListener("pointermove", move);
+    window.addEventListener("pointermove", move, { passive: true });
     loop();
     return () => { cancelAnimationFrame(raf); window.removeEventListener("pointermove", move); };
   }, []);
@@ -89,8 +90,8 @@ export function CursorGlow() {
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-0 hidden size-[500px] rounded-full opacity-40 blur-3xl md:block"
-      style={{ background: "radial-gradient(circle, color-mix(in oklab, var(--mars) 35%, transparent), color-mix(in oklab, var(--moon) 10%, transparent) 45%, transparent 70%)" }}
+      className="pointer-events-none fixed left-0 top-0 z-0 hidden size-[380px] rounded-full opacity-15 blur-3xl md:block"
+      style={{ background: "radial-gradient(circle, color-mix(in oklab, var(--mars) 28%, transparent), color-mix(in oklab, var(--moon) 8%, transparent) 45%, transparent 70%)" }}
     />
   );
 }
@@ -107,12 +108,7 @@ export function ScrollProgress() {
     return () => window.removeEventListener("scroll", on);
   }, []);
   return (
-    <div
-      ref={ref}
-      aria-hidden
-      className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-gradient-to-r from-mars via-moon to-earth"
-      style={{ transform: "scaleX(0)" }}
-    />
+    <div aria-hidden className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-gradient-to-r from-mars via-moon to-earth" style={{ transform: "scaleX(0)" }} />
   );
 }
 
@@ -227,23 +223,13 @@ export function OrbitSystem({ className }: { className?: string }) {
       <div className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-moon/20" />
       <div className="absolute inset-[14%] rounded-full border border-border" />
       <div className="absolute inset-[30%] rounded-full border border-earth/20" />
-      {/* Mars orbit */}
-      <div className="absolute inset-0 animate-orbit-slow">
-        <div className="planet-mars absolute left-1/2 top-0 size-9 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-      </div>
-      {/* Moon orbit */}
-      <div className="absolute inset-[14%] animate-orbit">
-        <div className="planet-moon absolute left-1/2 top-0 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-      </div>
-      {/* satellite */}
-      <div className="absolute inset-[30%] animate-orbit-rev">
-        <div className="absolute bottom-0 left-1/2 size-1.5 -translate-x-1/2 translate-y-1/2 rounded-full bg-earth shadow-[0_0_10px_var(--earth)]" />
-      </div>
+      <div className="absolute inset-0 animate-orbit-slow"><div className="planet-mars absolute left-1/2 top-0 size-9 -translate-x-1/2 -translate-y-1/2 rounded-full" /></div>
+      <div className="absolute inset-[14%] animate-orbit"><div className="planet-moon absolute left-1/2 top-0 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full" /></div>
+      <div className="absolute inset-[30%] animate-orbit-rev"><div className="absolute bottom-0 left-1/2 size-1.5 -translate-x-1/2 translate-y-1/2 rounded-full bg-earth shadow-[0_0_10px_var(--earth)]" /></div>
       <div className="absolute inset-[38%] animate-float">
         <div className="absolute inset-0 animate-pulse-ring rounded-full border border-earth/50" />
         <div className="planet-earth absolute inset-0 rounded-full" />
       </div>
-      {/* crosshair */}
       <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute inset-y-0 left-1/2 w-px bg-gradient-to-b from-transparent via-border to-transparent" />
     </div>

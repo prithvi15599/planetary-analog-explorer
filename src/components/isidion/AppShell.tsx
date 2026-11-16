@@ -3,6 +3,7 @@ import { BookOpen, Code2, Globe2, Info, ListOrdered, Menu, Rocket, Scale } from 
 import { useState, type ReactNode } from "react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { CursorGlow, ScrambleText, ScrollProgress, Starfield } from "./motion";
+import { ApplicationLaunchDialog } from "./ApplicationLaunchDialog";
 
 const NAV = [
   { to: "/", label: "Explorer", icon: Globe2 },
@@ -43,16 +44,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       <ScrollProgress />
 
       <header className="no-print sticky top-0 z-40 border-b border-border/70 bg-background/70 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 md:px-6">
           <Logo />
           <nav className="hidden items-center gap-0.5 lg:flex">
             {NAV.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                activeOptions={{ exact: n.to === "/" }}
-                className="nav-link rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-foreground"
-              >
+              <Link key={n.to} to={n.to} activeOptions={{ exact: n.to === "/" }} className="nav-link rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-foreground">
                 {n.label}
               </Link>
             ))}
@@ -65,6 +61,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </span>
               Space Apps 2026
             </span>
+            <ApplicationLaunchDialog />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger className="rounded-md border border-border p-2 text-muted-foreground hover:text-foreground lg:hidden" aria-label="Open menu">
                 <Menu className="size-4" />
@@ -73,14 +70,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <SheetTitle className="label-mono">Navigate</SheetTitle>
                 <nav className="mt-6 flex flex-col gap-1">
                   {NAV.map((n, i) => (
-                    <Link
-                      key={n.to}
-                      to={n.to}
-                      onClick={() => setOpen(false)}
-                      activeOptions={{ exact: n.to === "/" }}
-                      style={{ animationDelay: `${i * 60}ms` }}
-                      className="flex animate-in items-center gap-3 rounded-md px-3 py-3 text-lg font-display fade-in slide-in-from-right-8 fill-mode-both duration-500 data-[status=active]:bg-secondary data-[status=active]:text-primary"
-                    >
+                    <Link key={n.to} to={n.to} onClick={() => setOpen(false)} activeOptions={{ exact: n.to === "/" }} style={{ animationDelay: `${i * 60}ms` }} className="flex animate-in items-center gap-3 rounded-md px-3 py-3 text-lg font-display fade-in slide-in-from-right-8 fill-mode-both duration-500 data-[status=active]:bg-secondary data-[status=active]:text-primary">
                       <n.icon className="size-5" />
                       {n.label}
                     </Link>
@@ -105,12 +95,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <nav className="no-print fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-border bg-background/90 backdrop-blur-xl lg:hidden">
         {NAV.filter((n) => MOBILE_PRIMARY.includes(n.to)).map((n) => (
-          <Link
-            key={n.to}
-            to={n.to}
-            activeOptions={{ exact: n.to === "/" }}
-            className="group flex flex-col items-center gap-1 py-2.5 text-[11px] text-muted-foreground data-[status=active]:text-primary"
-          >
+          <Link key={n.to} to={n.to} activeOptions={{ exact: n.to === "/" }} className="group flex flex-col items-center gap-1 py-2.5 text-[11px] text-muted-foreground data-[status=active]:text-primary">
             <n.icon className="size-5 transition-transform group-active:scale-90 group-data-[status=active]:-translate-y-0.5" />
             {n.label}
           </Link>

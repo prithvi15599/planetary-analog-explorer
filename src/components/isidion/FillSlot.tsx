@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { SITES } from "@/lib/isidion/data";
 import { cn } from "@/lib/utils";
 
 interface FillSlotProps {
@@ -13,42 +15,44 @@ interface FillSlotProps {
 }
 
 /**
- * Empty, labelled placeholder for an interactive feature.
- * Replace <FillSlot> with your implementation (or pass it as children).
+ * A report-backed snapshot for feature areas whose interactive implementation is pending.
+ * It keeps these sections useful without presenting static research as a live analysis.
  */
 export function FillSlot({ slot, title, hint, inputs, className, children }: FillSlotProps) {
   if (children) return <>{children}</>;
+
   return (
-    <div
-      data-slot={slot}
-      className={cn(
-        "fill-slot bg-grid group relative flex min-h-48 flex-col items-center justify-center gap-3 overflow-hidden p-6 text-center",
-        className,
-      )}
-    >
-      {/* radar sweep */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[160%] -translate-x-1/2 -translate-y-1/2 animate-spin-slow rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,color-mix(in_oklab,var(--slot)_14%,transparent)_40deg,transparent_70deg)]" />
-      {/* scanline */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-10 animate-scan bg-gradient-to-b from-transparent via-slot/10 to-transparent" />
-      {/* corner brackets */}
-      {["left-2 top-2 border-l border-t", "right-2 top-2 border-r border-t", "bottom-2 left-2 border-b border-l", "bottom-2 right-2 border-b border-r"].map((c) => (
-        <span key={c} aria-hidden className={cn("absolute size-4 border-slot/70 transition-all duration-300 group-hover:size-6", c)} />
-      ))}
-      <span className="label-mono relative flex items-center gap-2 text-slot">
-        <span className="size-1.5 animate-blink rounded-full bg-slot" />
-        Fill-in · {slot}
-      </span>
-      <h3 className="relative text-lg font-medium text-foreground">{title}</h3>
-      {hint && <p className="relative max-w-md text-sm text-muted-foreground">{hint}</p>}
-      {inputs && inputs.length > 0 && (
-        <div className="relative flex flex-wrap justify-center gap-1.5">
-          {inputs.map((i) => (
-            <code key={i} className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">
-              {i}
-            </code>
-          ))}
+    <section data-slot={slot} aria-label={`${title} research snapshot`} className={cn("panel relative flex flex-col overflow-hidden rounded-lg p-5", className)}>
+      <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
+        <div>
+          <p className="label-mono flex items-center gap-2 text-earth"><span className="size-1.5 rounded-full bg-earth" /> Report-backed research · static reference</p>
+          <h3 className="mt-2 text-lg font-medium text-foreground">{title}</h3>
+          {hint && <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{hint}</p>}
         </div>
-      )}
-    </div>
+        <ArrowUpRight aria-hidden className="mt-1 size-4 shrink-0 text-muted-foreground" />
+      </div>
+
+      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        {SITES.map((site) => (
+          <article key={site.id} className="rounded-md border border-border/70 bg-background/40 p-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="font-mono text-[10px] text-muted-foreground">{site.code}</p>
+                <h4 className="mt-0.5 truncate text-sm font-medium">{site.name}</h4>
+              </div>
+              <span className="shrink-0 rounded-full border border-mars/30 bg-mars/10 px-2 py-0.5 font-mono text-[10px] text-mars">{site.overall}/100</span>
+            </div>
+            <p className="mt-2 flex items-center gap-1 font-mono text-[10px] text-muted-foreground"><MapPin className="size-3" />{site.lat.toFixed(3)}°, {site.lon.toFixed(3)}° · {site.country}</p>
+            <p className="mt-2 text-xs leading-relaxed text-foreground/90">{site.analogy}</p>
+            <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">{site.values}</p>
+          </article>
+        ))}
+      </div>
+
+      <p className="mt-4 border-t border-border pt-3 text-[11px] leading-relaxed text-muted-foreground">
+        Scores and descriptions reflect the supplied research report. They are reference values—not a live map, mission ranking, or newly calculated planetary comparison.
+      </p>
+      {inputs && inputs.length > 0 && <p className="sr-only">Related application inputs: {inputs.join(", ")}</p>}
+    </section>
   );
 }
